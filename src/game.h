@@ -55,6 +55,9 @@
 #define WIIERO_VERSION "wiiero v1.3    [switch edition]"
 #endif
 
+#ifdef PSP2
+#define WIIERO_VERSION "wiiero 1.3     [vita edition]"
+#endif
 
 #define WIIERO_STD_LIFES              10
 #define WIIERO_STD_FLAGS               5
@@ -69,7 +72,7 @@
 #define WIIERO_STD_NB_ROCKS           50
 #define WIIERO_NAME_LEN               10
 #define WIIERO_STD_SCREEN_RESOLUTION  SCREEN_RES
-#define WIIERO_STD_OPT_FILE           "/switch/wiiero/config.wro"
+#define WIIERO_STD_OPT_FILE           "ux0:/data/wiiero/config.wro"
 #define WIIERO_STD_MUB                 0
 #define WIIERO_STD_LANG                0
 

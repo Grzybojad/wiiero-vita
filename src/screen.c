@@ -38,6 +38,7 @@ static int screen_resolution[MAX_RES][3]={{320,220,32}
                                           ,{600,400,32}
                                           ,{640,420,32}
                                           ,{640,480,32}
+                                          ,{960,544,32}
                                           ,{720,480,32}
                                           ,{1280,720,32}};
 
@@ -113,7 +114,7 @@ void screen_loading_splash(screen_t* s){
   for(alpha=0; alpha<255;alpha++){
 #ifndef PSP_MODE
     /* Wii, PC */
-    usleep(500);
+    //usleep(500);
 #else
     SDL_Delay(5);
 #endif

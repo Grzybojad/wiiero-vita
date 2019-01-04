@@ -1,0 +1,15 @@
+# Build files
+Build
+param.sfo
+
+# Vita build
+*.vpk
+
+# Make files
+*.elf
+*.velf
+
+# VS code files
+src/.vs
+
+*.o

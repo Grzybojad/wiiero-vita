@@ -54,6 +54,9 @@
 //#define SCREEN_RES   RES_640_420
 #endif
 
+#ifdef PSP2
+#define SCREEN_RES   RES_960_544
+#endif
 
 
 #define WANTED_FPS 25

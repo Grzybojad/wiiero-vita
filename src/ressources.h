@@ -32,7 +32,7 @@
 #include <SDL/SDL.h>
 
 
-#define SPRITEDIR "/switch/wiiero/sprites"
+#define SPRITEDIR "ux0:/data/wiiero/sprites"
 //#define SPRITEDIR "./sprites"
 
 /* PLAYERS */

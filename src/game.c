@@ -49,6 +49,9 @@ static char str_errno[128];
 #ifdef SWITCH
 #include "input_switch.h"
 #endif
+#ifdef PSP2
+#include "input_vita.h"
+#endif
 
 #include "font.h"
 #include "cpu_player.h"
@@ -1555,7 +1558,7 @@ void wiiero_cycle(game_t* g){
   if((SDL_GetTicks() - start_time) < g->wiiero_frame_delay + (bullet_time_effect_delay/8)){
 #ifndef PSP_MODE
     /* Wii, PC */
-    usleep((g->wiiero_frame_delay + (bullet_time_effect_delay/8) - (SDL_GetTicks() - start_time))*1000);
+    //usleep((g->wiiero_frame_delay + (bullet_time_effect_delay/8) - (SDL_GetTicks() - start_time))*1000);
 #else
     SDL_Delay(g->wiiero_frame_delay + (bullet_time_effect_delay/8) - (SDL_GetTicks() - start_time));
 #endif

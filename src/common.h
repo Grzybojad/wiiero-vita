@@ -38,6 +38,7 @@ typedef enum { RES_320_240
               ,RES_640_420
               ,RES_640_480
               ,RES_720_480
+              ,RES_960_544
               ,RES_1280_720
               ,MAX_RES
 } screen_res_t;
