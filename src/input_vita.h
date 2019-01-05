@@ -130,13 +130,13 @@ enum{/* - -- --- WIIERO EVENTS ---- --- -- - */
     P1_ACTION_KEY_JUMP   = SCE_CTRL_CIRCLE,
     P1_ACTION_KEY_CHANGE = SCE_CTRL_TRIANGLE,
     P1_ACTION_KEY_FIRE   = SCE_CTRL_SQUARE,
-    P2_ACTION_KEY_UP     = 0,
-    P2_ACTION_KEY_DOWN   = 0,
-    P2_ACTION_KEY_LEFT   = 0,
-    P2_ACTION_KEY_RIGHT  = 0,
-    P2_ACTION_KEY_JUMP   = 0,
-    P2_ACTION_KEY_CHANGE = 0,
-    P2_ACTION_KEY_FIRE   = SCE_CTRL_RTRIGGER,
+    P2_ACTION_KEY_UP     = SCE_CTRL_UP,
+    P2_ACTION_KEY_DOWN   = SCE_CTRL_DOWN,
+    P2_ACTION_KEY_LEFT   = SCE_CTRL_LEFT,
+    P2_ACTION_KEY_RIGHT  = SCE_CTRL_RIGHT,
+    P2_ACTION_KEY_JUMP   = SCE_CTRL_CIRCLE,
+    P2_ACTION_KEY_CHANGE = SCE_CTRL_TRIANGLE,
+    P2_ACTION_KEY_FIRE   = SCE_CTRL_SQUARE,
     GAME_ACTION_KEY_EXIT = SCE_CTRL_START,
     GAME_ACTION_KEY_FLIP = 0,
     GAME_ACTION_KEY_PAUSE= SCE_CTRL_SELECT,
@@ -167,7 +167,7 @@ static __inline__ void game_check_event(game_t* g){
  
   SceCtrlData pad, pad2;
   sceCtrlPeekBufferPositive(0, &pad, 1);
-  //sceCtrlPeekBufferPositive(2, &pad2, 1);
+  sceCtrlPeekBufferPositive(2, &pad2, 1);
  
   /* GET KEYS */
   keystate = pad.buttons;
@@ -188,6 +188,8 @@ static __inline__ void game_check_event(game_t* g){
    if ( keystate & P1_ACTION_KEY_FIRE )
     g->worms[PLAYER_1]->worms_action |= (ACTION_FIRE | ACTION_OK);
      
+  keystate = pad2.buttons;
+
   // [PLAYER_2]
   if ( keystate & P2_ACTION_KEY_UP )
     g->worms[PLAYER_2]->worms_action |= ACTION_UP;
