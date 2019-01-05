@@ -187,25 +187,31 @@ static __inline__ void game_check_event(game_t* g){
     g->worms[PLAYER_1]->worms_action |= ACTION_CHANGE;
    if ( keystate & P1_ACTION_KEY_FIRE )
     g->worms[PLAYER_1]->worms_action |= (ACTION_FIRE | ACTION_OK);
-     
-  keystate = pad2.buttons;
 
-  // [PLAYER_2]
-  if ( keystate & P2_ACTION_KEY_UP )
-    g->worms[PLAYER_2]->worms_action |= ACTION_UP;
-  if ( keystate & P2_ACTION_KEY_DOWN )
-    g->worms[PLAYER_2]->worms_action |= ACTION_DOWN;
-  if ( keystate & P2_ACTION_KEY_LEFT )
-    g->worms[PLAYER_2]->worms_action |= ACTION_LEFT;
-  if ( keystate & P2_ACTION_KEY_RIGHT )
-    g->worms[PLAYER_2]->worms_action |= ACTION_RIGHT;
-  if ( keystate & P2_ACTION_KEY_JUMP )
-    g->worms[PLAYER_2]->worms_action |= (ACTION_JUMP | ACTION_CANCEL);
-  if ( keystate & P2_ACTION_KEY_CHANGE )
-    g->worms[PLAYER_2]->worms_action |= ACTION_CHANGE;
-  if ( keystate & P2_ACTION_KEY_FIRE )
-    g->worms[PLAYER_2]->worms_action |= (ACTION_FIRE | ACTION_OK);
-   
+
+  SceCtrlPortInfo myPortInfo;
+  sceCtrlGetControllerPortInfo( &myPortInfo );
+  if( myPortInfo.port[2] != SCE_CTRL_TYPE_UNPAIRED )
+  {
+    keystate = pad2.buttons;
+
+    // [PLAYER_2]
+    if ( keystate & P2_ACTION_KEY_UP )
+      g->worms[PLAYER_2]->worms_action |= ACTION_UP;
+    if ( keystate & P2_ACTION_KEY_DOWN )
+      g->worms[PLAYER_2]->worms_action |= ACTION_DOWN;
+    if ( keystate & P2_ACTION_KEY_LEFT )
+      g->worms[PLAYER_2]->worms_action |= ACTION_LEFT;
+    if ( keystate & P2_ACTION_KEY_RIGHT )
+      g->worms[PLAYER_2]->worms_action |= ACTION_RIGHT;
+    if ( keystate & P2_ACTION_KEY_JUMP )
+      g->worms[PLAYER_2]->worms_action |= (ACTION_JUMP | ACTION_CANCEL);
+    if ( keystate & P2_ACTION_KEY_CHANGE )
+      g->worms[PLAYER_2]->worms_action |= ACTION_CHANGE;
+    if ( keystate & P2_ACTION_KEY_FIRE )
+      g->worms[PLAYER_2]->worms_action |= (ACTION_FIRE | ACTION_OK);
+  }
+
   // [OTHER]
   if (keystate & GAME_ACTION_KEY_EXIT ){
      g->worms[PLAYER_1]->worms_action |= ACTION_MENU;
