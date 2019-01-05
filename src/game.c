@@ -1468,6 +1468,7 @@ void wiiero_cycle(game_t* g){
   player_clean(g->worms[PLAYER_1]);
   player_clean(g->worms[PLAYER_2]);
   game_check_event(g);
+
   switch(g->wiiero_game_status){
     case GAME_SET_MENU: 
       wiiero_set_menu(g);
@@ -1559,12 +1560,15 @@ void wiiero_cycle(game_t* g){
 #ifndef PSP_MODE
     /* Wii, PC */
     //usleep((g->wiiero_frame_delay + (bullet_time_effect_delay/8) - (SDL_GetTicks() - start_time))*1000);
+    SDL_Delay(g->wiiero_frame_delay + (bullet_time_effect_delay/8) - (SDL_GetTicks() - start_time));
 #else
     SDL_Delay(g->wiiero_frame_delay + (bullet_time_effect_delay/8) - (SDL_GetTicks() - start_time));
 #endif
   }
   if(bullet_time_effect_delay>0)
         bullet_time_effect_delay-=4;
+
+  SDL_Flip(g->wiiero_screen->surface);
 }/*--------------------------------------------------------------------------*/
 
 

@@ -20,7 +20,7 @@ export INCLUDE	:= $(foreach dir,$(INCLUDES),-I$(CURDIR)/$(dir))
 PREFIX  = arm-vita-eabi
 CC      = $(PREFIX)-gcc
 CXX      = $(PREFIX)-g++
-CFLAGS  = $(INCLUDE) -g -Wl,-q -O3 -fno-lto -DPSP2
+CFLAGS  = $(INCLUDE) -g -Wl,-q -O3 -fno-lto -DPSP2 -DEBUG_ON -DINGAME_DEBUG_ON
 CXXFLAGS  = $(CFLAGS) -fno-exceptions -std=gnu++11 -fpermissive
 ASFLAGS = $(CFLAGS)
 

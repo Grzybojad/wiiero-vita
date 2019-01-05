@@ -10,6 +10,7 @@ param.sfo
 *.velf
 
 # VS code files
+.vscode
 src/.vs
 
 *.o

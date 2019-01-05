@@ -1,9 +1,9 @@
 /*
  *  __      _ .__  .__
  * /  \    / \(__) (__)  ____ ______  ____
- * \   \/\/  /|  | |  |_/ __ \\_  _ \/  _ \ 
+ * \   \/\/  /|  | |  |_/ __ \\_  _ \/  _ \
  *  \       //   |/   |\  ___/ |  |\(  <_> )
- *   \__/\_/ \__ \\__ \ \___  >|__|  \____/ 
+ *   \__/\_/ \__ \\__ \ \___  >|__|  \____/
  *              \/   \/     \/ By BScrk
  * Copyright (C) 2008-2009 Luca Benevolo <wiiero@free.fr>
  *
@@ -25,23 +25,28 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-
+ 
+ 
 #ifndef INPUT_H
 #define INPUT_H
-
+ 
 #include "common.h"
 #include <SDL/SDL.h>
 #include "player.h"
 #include "game.h"
 
-
+#include <psp2/kernel/processmgr.h>
+#include <psp2/touch.h>
+#include <psp2/ctrl.h>
+ 
+#include <vitasdk.h>
+ 
 typedef enum { MODE_CMD
      , EXTRA_INFO
      , FIRE_CMD
      , JUMP_CMD
      , CROP_CMD
-     , WSHOW_CMD 
+     , WSHOW_CMD
      , WLEFT_CMD
      , WRIGHT_CMD
      , NINJA_CMD
@@ -55,7 +60,7 @@ typedef enum { MODE_CMD
      , CANCEL_CMD
      , MAX_CMD
 } lab_id_t;
-
+ 
 char * cmd_labels[MAX_CMD] = {
   "PC controls"
  ,""
@@ -75,8 +80,8 @@ char * cmd_labels[MAX_CMD] = {
  ,"ok:"
  ,"cancel:"
 };
-
-
+ 
+ 
 char * cmd_key[2][MAX_CMD] = {
  { ""
   ,"Player 1"
@@ -114,42 +119,42 @@ char * cmd_key[2][MAX_CMD] = {
   ,"[insert]"
  }
 };
-
-
-
+ 
+ 
+ 
 enum{/* - -- --- WIIERO EVENTS ---- --- -- - */
-    P1_ACTION_KEY_UP     = SDLK_UP,
-    P1_ACTION_KEY_DOWN   = SDLK_DOWN,
-    P1_ACTION_KEY_LEFT   = SDLK_LEFT,
-    P1_ACTION_KEY_RIGTH  = SDLK_RIGHT,
-    P1_ACTION_KEY_JUMP   = SDLK_j, // zl
-    P1_ACTION_KEY_CHANGE = SDLK_PLUS,
-    P1_ACTION_KEY_FIRE   = SDLK_l,
-    P2_ACTION_KEY_UP     = SDLK_x,
-    P2_ACTION_KEY_DOWN   = SDLK_b,
-    P2_ACTION_KEY_LEFT   = SDLK_y,
-    P2_ACTION_KEY_RIGHT  = SDLK_a,
-    P2_ACTION_KEY_JUMP   = SDLK_k, // zr
-    P2_ACTION_KEY_CHANGE = SDLK_MINUS,
-    P2_ACTION_KEY_FIRE   = SDLK_r,
-    GAME_ACTION_KEY_EXIT = SDLK_RSHIFT,
-    GAME_ACTION_KEY_FLIP = SDLK_TAB,
-    GAME_ACTION_KEY_PAUSE= SDLK_LSHIFT,
+    P1_ACTION_KEY_UP     = SCE_CTRL_UP,
+    P1_ACTION_KEY_DOWN   = SCE_CTRL_DOWN,
+    P1_ACTION_KEY_LEFT   = SCE_CTRL_LEFT,
+    P1_ACTION_KEY_RIGHT  = SCE_CTRL_RIGHT,
+    P1_ACTION_KEY_JUMP   = SCE_CTRL_CIRCLE,
+    P1_ACTION_KEY_CHANGE = SCE_CTRL_TRIANGLE,
+    P1_ACTION_KEY_FIRE   = SCE_CTRL_SQUARE,
+    P2_ACTION_KEY_UP     = 0,
+    P2_ACTION_KEY_DOWN   = 0,
+    P2_ACTION_KEY_LEFT   = 0,
+    P2_ACTION_KEY_RIGHT  = 0,
+    P2_ACTION_KEY_JUMP   = 0,
+    P2_ACTION_KEY_CHANGE = 0,
+    P2_ACTION_KEY_FIRE   = SCE_CTRL_RTRIGGER,
+    GAME_ACTION_KEY_EXIT = SCE_CTRL_START,
+    GAME_ACTION_KEY_FLIP = 0,
+    GAME_ACTION_KEY_PAUSE= SCE_CTRL_SELECT,
 };/* - -- --- WIIERO EVENTS ---- --- -- */
-
-
-
-
+ 
+ 
+ 
+ 
 static __inline__ int are_controls_ready(){
   return 1;
 }
-
+ 
 /* PC event control */
-static __inline__ void game_check_event(game_t* g){ 
+static __inline__ void game_check_event(game_t* g){
   /* CHECK GAME EVENTS */
-  Uint8 *keystate;
+  uint32_t keystate;
   ASSERT(g);
-
+ 
   /* FLUSH EVENTS */
   SDL_Event event;
   while(SDL_PollEvent(&event)!=0){
@@ -159,68 +164,73 @@ static __inline__ void game_check_event(game_t* g){
       break;
     }
   }
+ 
+  SceCtrlData pad, pad2;
+  sceCtrlPeekBufferPositive(0, &pad, 1);
+  //sceCtrlPeekBufferPositive(2, &pad2, 1);
+ 
   /* GET KEYS */
-  keystate = SDL_GetKeyState(NULL);
-  
+  keystate = pad.buttons;
+ 
   // [PLAYER_1]
-  if ( keystate[P1_ACTION_KEY_UP] )
+  if ( keystate & P1_ACTION_KEY_UP )
     g->worms[PLAYER_1]->worms_action |= ACTION_UP;
-   if ( keystate[P1_ACTION_KEY_DOWN] )
-    g->worms[PLAYER_1]->worms_action |= ACTION_DOWN; 
-  if ( keystate[P1_ACTION_KEY_LEFT] )
+   if ( keystate & P1_ACTION_KEY_DOWN )
+    g->worms[PLAYER_1]->worms_action |= ACTION_DOWN;
+  if ( keystate & P1_ACTION_KEY_LEFT )
     g->worms[PLAYER_1]->worms_action |= ACTION_LEFT;
-   if ( keystate[P1_ACTION_KEY_RIGTH] )
-    g->worms[PLAYER_1]->worms_action |= ACTION_RIGHT; 
-   if ( keystate[P1_ACTION_KEY_JUMP] )
-    g->worms[PLAYER_1]->worms_action |= (ACTION_JUMP | ACTION_CANCEL);
-  if ( keystate[P1_ACTION_KEY_CHANGE] )
+   if ( keystate & P1_ACTION_KEY_RIGHT )
+    g->worms[PLAYER_1]->worms_action |= ACTION_RIGHT;
+   //if ( keystate & P1_ACTION_KEY_JUMP )
+   // g->worms[PLAYER_1]->worms_action |= (ACTION_JUMP | ACTION_CANCEL);
+  if ( keystate & P1_ACTION_KEY_CHANGE )
     g->worms[PLAYER_1]->worms_action |= ACTION_CHANGE;
-   if ( keystate[P1_ACTION_KEY_FIRE] )
-    g->worms[PLAYER_1]->worms_action |= (ACTION_FIRE | ACTION_OK); 
-      
+   if ( keystate & P1_ACTION_KEY_FIRE )
+    g->worms[PLAYER_1]->worms_action |= (ACTION_FIRE | ACTION_OK);
+     
   // [PLAYER_2]
-  if ( keystate[P2_ACTION_KEY_UP] )
+  if ( keystate & P2_ACTION_KEY_UP )
     g->worms[PLAYER_2]->worms_action |= ACTION_UP;
-   if ( keystate[P2_ACTION_KEY_DOWN] )
-    g->worms[PLAYER_2]->worms_action |= ACTION_DOWN; 
-  if ( keystate[P2_ACTION_KEY_LEFT] )
+   if ( keystate & P2_ACTION_KEY_DOWN )
+    g->worms[PLAYER_2]->worms_action |= ACTION_DOWN;
+  if ( keystate & P2_ACTION_KEY_LEFT )
     g->worms[PLAYER_2]->worms_action |= ACTION_LEFT;
-   if ( keystate[P2_ACTION_KEY_RIGHT] )
-    g->worms[PLAYER_2]->worms_action |= ACTION_RIGHT; 
-   if ( keystate[P2_ACTION_KEY_JUMP] )
-    g->worms[PLAYER_2]->worms_action |= (ACTION_JUMP | ACTION_CANCEL); 
-  if ( keystate[P2_ACTION_KEY_CHANGE] )
+   if ( keystate & P2_ACTION_KEY_RIGHT )
+    g->worms[PLAYER_2]->worms_action |= ACTION_RIGHT;
+   //if ( keystate & P2_ACTION_KEY_JUMP )
+   // g->worms[PLAYER_2]->worms_action |= (ACTION_JUMP | ACTION_CANCEL);
+  if ( keystate & P2_ACTION_KEY_CHANGE )
     g->worms[PLAYER_2]->worms_action |= ACTION_CHANGE;
-   if ( keystate[P2_ACTION_KEY_FIRE] )
-    g->worms[PLAYER_2]->worms_action |= (ACTION_FIRE | ACTION_OK); 
+   if ( keystate & P2_ACTION_KEY_FIRE )
+    g->worms[PLAYER_2]->worms_action |= (ACTION_FIRE | ACTION_OK);
    
   // [OTHER]
-  if (keystate[GAME_ACTION_KEY_EXIT] ){
+  /*if (keystate & GAME_ACTION_KEY_EXIT ){
      g->worms[PLAYER_1]->worms_action |= ACTION_MENU;
   }
-  
-  if (keystate[GAME_ACTION_KEY_FLIP])
+ 
+  if (keystate & GAME_ACTION_KEY_FLIP)
        screen_flip_mode(g->wiiero_screen);
-
-  if ( keystate[GAME_ACTION_KEY_PAUSE] ){
-    g->worms[PLAYER_1]->worms_action |= ACTION_PAUSE; 
-  }
+ 
+  if ( keystate & GAME_ACTION_KEY_PAUSE ){
+    g->worms[PLAYER_1]->worms_action |= ACTION_PAUSE;
+  }*/
 }
-
-
+ 
+ 
 /* Player event update PC */
 static __inline__ void player_event_update(player_t* p,map_t* m,player_t* other_p){
   ASSERT(p);
   ASSERT(m);
-
+ 
   if(!(p->worms_status & STATUS_ALIVE)){
     if(p->ninja_hook->last_bullet)
       player_remove_hook(p,other_p);
     return;
   }
-  
+ 
   p->worms_status &= ~STATUS_SHOW_W;
-  
+ 
   /* Up & Down events */
   if(p->worms_action & ACTION_CHANGE){
       if(p->worms_action & ACTION_UP)
@@ -250,7 +260,7 @@ static __inline__ void player_event_update(player_t* p,map_t* m,player_t* other_
         player_launch_hook(p);
       }
       p->worms_status |= STATUS_NINJA_ACTION;
-    } 
+    }
   }else{
     /* jump */
     if((p->worms_action & ACTION_JUMP)){
@@ -303,7 +313,7 @@ static __inline__ void player_event_update(player_t* p,map_t* m,player_t* other_
   /* FIRE */
   if(p->worms_action & ACTION_FIRE)
      player_fire(p);  
-
+ 
 }
-
+ 
 #endif

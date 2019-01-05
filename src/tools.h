@@ -44,11 +44,12 @@
 #define SHOW_FPS
 #endif
 
-#define ERROR(...) { \
+#define ERROR printf
+/*(...) { \
           DBG("%s : %u\n",__FILE__, __LINE__); \
           DBG(__VA_ARGS__);\
           exit(EXIT_FAILURE);\
-        };
+        };*/
         
 #ifdef DEBUG_ON
 #  define ASSERT(expression) { if(!(expression)) ERROR("Assert failure!\n"); };

@@ -37,6 +37,7 @@
 #include <sys/resource.h>
 #include <unistd.h>
 #include <errno.h>
+
 #endif
 
 #include <time.h>
@@ -44,7 +45,19 @@
 #include "tools.h"
 #include "fast_trig.h"
 #include "lang.h"
+#include <vitasdk.h>
+
+
+
 int main(int argc, char * argv[]) {
+
+#ifdef PSP2
+	scePowerSetArmClockFrequency(444);
+	scePowerSetBusClockFrequency(222);
+	scePowerSetGpuClockFrequency(222);
+	scePowerSetGpuXbarClockFrequency(166);
+#endif
+
   game_t game;
   srand(time(NULL));
 

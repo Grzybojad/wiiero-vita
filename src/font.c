@@ -192,7 +192,8 @@ void font_putc_strict_pos(camera_t* c,char charact,int x, int y,fontsize_t fsize
 /* ************************************************************************** */
 void font_console_print_debug(char* text,fontsize_t fsize){
 #ifdef INGAME_DEBUG_ON
-  font_console_print(text,fsize);
+  printf(text,fsize);
+  //font_console_print(text,fsize);
 #else
   font_progress_print(".",fsize);
 #endif

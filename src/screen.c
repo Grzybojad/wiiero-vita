@@ -32,6 +32,8 @@
 #include "ressources.h"
 #include <unistd.h>
 
+#include <vitasdk.h>
+
 static int screen_resolution[MAX_RES][3]={{320,220,32}
                                           ,{480,272,32}
                                           ,{480,320,32}
@@ -79,6 +81,7 @@ void screen_release(screen_t* s){
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 void screen_reset_mode(screen_t* s){
   ASSERT(s);
+  vita2d_texture_set_alloc_memblock_type( SCE_KERNEL_MEMBLOCK_TYPE_USER_RW );
   if(s->surface)
     SDL_FreeSurface( s->surface );
   if(s->mode == WIN_SCREEN_MODE){
