@@ -55,7 +55,7 @@
 #endif
 
 #ifdef PSP2
-#define SCREEN_RES   RES_960_544
+#define SCREEN_RES   RES_320_240
 #endif
 
 

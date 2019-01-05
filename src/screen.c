@@ -92,6 +92,8 @@ void screen_reset_mode(screen_t* s){
     s->surface = SDL_SetVideoMode(s->w, s->h, s->bpp, SDL_HWSURFACE
                                                        | SDL_DOUBLEBUF
                                                        | SDL_FULLSCREEN );
+    SDL_SetVideoModeScaling(0, 0, 960, 544);
+    SDL_SetVideoModeBilinear(1);
     SDL_ShowCursor( SDL_DISABLE );
   }
 }/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
