@@ -15,25 +15,25 @@ In the wiiero world, players are able to fight with the original Liero weapons (
 ![Wiiero-vita screenshot2](https://i.imgur.com/juqEoTp.png)
 
 ## Installation
-1. Download the .vpk and data files from the (release section)[https://github.com/Grzybojad/wiiero-vita/releases]
+1. Download the .vpk and data files from the [release section](https://github.com/Grzybojad/wiiero-vita/releases).
 2. Install the .vpk on your vita.
-3. Copy the audio, lang, music and sprites folders to ux0:/data/wiiero (create the wiiero folder there)
+3. Copy the audio, lang, music and sprites folders to ux0:/data/wiiero (create the wiiero folder there).
 
 ## Building
 
 1. To build wiiero-vita you'll need to intsall [VitaSDK](https://github.com/vitasdk/vdpm) first.
 2. Run `make` and compress the `param.sfo`, `eboot.bin` and `sce_sys` folder into a .vpk file.
 3. Install the .vpk on your vita.
-4. Copy the audio, lang, music and sprites folders to ux0:/data/wiiero (create the wiiero folder there)
+4. Copy the audio, lang, music and sprites folders to ux0:/data/wiiero (create the wiiero folder there).
 
 ## Super special thanks
-* (Rinnegatamante)[https://github.com/Rinnegatamante/] for the huge support with this port, without him I would never be able to get this to work.
+* [Rinnegatamante](https://github.com/Rinnegatamante/) for the huge support with this port, without him I would never be able to get this to work.
 
 ## Regular special thanks
 
 * Joosa Riekkinen (Liero Developer)
 * Luca Denevolo (Wiiero Developer)
 * Every VitaSDK contributor
-* (SDL-vita)[https://github.com/Rinnegatamante/SDL-Vita] contributors
-* (rsn-8887)[https://github.com/rsn8887/SDL-Vita] for additional SDL-vita help
+* [SDL-vita](https://github.com/Rinnegatamante/SDL-Vita) contributors
+* [rsn-8887](https://github.com/rsn8887/SDL-Vita) for additional SDL-vita help
 * HENkaku Discord community for the development help
