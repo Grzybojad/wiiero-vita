@@ -189,12 +189,8 @@ static __inline__ void game_check_event(game_t* g){
     g->worms[PLAYER_1]->worms_action |= (ACTION_FIRE | ACTION_OK);
 
 
-  // On Vita TV, port 0 and 1 are the same controller
-  // and that is the first one, so we check if port 2 is occupied
-  // thanks caghandemir for the hackery that is here
-  SceCtrlPortInfo myPortInfo;
-  sceCtrlGetControllerPortInfo( &myPortInfo );
-  if( myPortInfo.port[2] != SCE_CTRL_TYPE_UNPAIRED )
+  // Should return true on PSTV/Vita3k and false on a regular Vita
+  if( sceCtrlIsMultiControllerSupported() )
   {
     keystate = pad2.buttons;
 
