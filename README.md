@@ -9,6 +9,16 @@ Liero is a PvP game between two worms armed with heavy weapons of all kinds batt
 Wiiero is composed of 3 game modes: Deathmatch, Capture the flag and game of tag.
 In the wiiero world, players are able to fight with the original Liero weapons ( there are basically thirty of them) or add the twenty more or less harmful new ones.
 
+## Controls
+| Action | Binding |
+| ------ | ------- |
+| Menu navigation / movement | DPAD / Left Analog Stick |
+| Menu select / fire | Square |
+| Jump | Circle |
+| Change weapons | Triangle |
+| Menu | Start |
+| Pause | Select |
+
 ## Screenshots
 
 ![Wiiero-vita screenshot1](https://i.imgur.com/2zr78QR.png)
@@ -25,6 +35,10 @@ In the wiiero world, players are able to fight with the original Liero weapons (
 2. Run `make` and compress the `param.sfo`, `eboot.bin` and `sce_sys` folder into a .vpk file.
 3. Install the .vpk on your vita.
 4. Copy the audio, lang, music and sprites folders to ux0:/data/wiiero (create the wiiero folder there).
+
+## Bugs
+* Sound works when playing on Vita3K, but doesn't on real hardware
+* Selecting the "How to play option" causes a crash
 
 ## Super special thanks
 * [Rinnegatamante](https://github.com/Rinnegatamante/) for the huge support with this port, without him I would never be able to get this to work.
