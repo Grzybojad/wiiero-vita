@@ -168,18 +168,19 @@ static __inline__ void game_check_event(game_t* g){
   SceCtrlData pad, pad2;
   sceCtrlPeekBufferPositive(0, &pad, 1);
   sceCtrlPeekBufferPositive(2, &pad2, 1);
+  sceCtrlSetSamplingMode( SCE_CTRL_MODE_ANALOG );
  
   /* GET KEYS */
   keystate = pad.buttons;
- 
+
   // [PLAYER_1]
-  if ( keystate & P1_ACTION_KEY_UP )
+  if ( ( keystate & P1_ACTION_KEY_UP ) || ( 88 > pad.ly ) )
     g->worms[PLAYER_1]->worms_action |= ACTION_UP;
-  if ( keystate & P1_ACTION_KEY_DOWN )
+  if ( ( keystate & P1_ACTION_KEY_DOWN ) || ( pad.ly > 168 ) )
     g->worms[PLAYER_1]->worms_action |= ACTION_DOWN;
-  if ( keystate & P1_ACTION_KEY_LEFT )
+  if ( ( keystate & P1_ACTION_KEY_LEFT ) || ( 88 > pad.lx ) )
     g->worms[PLAYER_1]->worms_action |= ACTION_LEFT;
-  if ( keystate & P1_ACTION_KEY_RIGHT )
+  if ( ( keystate & P1_ACTION_KEY_RIGHT ) || ( pad.lx > 178 ) )
     g->worms[PLAYER_1]->worms_action |= ACTION_RIGHT;
   if ( keystate & P1_ACTION_KEY_JUMP )
     g->worms[PLAYER_1]->worms_action |= (ACTION_JUMP | ACTION_CANCEL);
@@ -195,13 +196,13 @@ static __inline__ void game_check_event(game_t* g){
     keystate = pad2.buttons;
 
     // [PLAYER_2]
-    if ( keystate & P2_ACTION_KEY_UP )
+    if ( ( keystate & P2_ACTION_KEY_UP ) || ( 88 > pad2.ly ) )
       g->worms[PLAYER_2]->worms_action |= ACTION_UP;
-    if ( keystate & P2_ACTION_KEY_DOWN )
+    if ( ( keystate & P2_ACTION_KEY_DOWN ) || ( pad2.ly > 168 ) )
       g->worms[PLAYER_2]->worms_action |= ACTION_DOWN;
-    if ( keystate & P2_ACTION_KEY_LEFT )
+    if ( ( keystate & P2_ACTION_KEY_LEFT ) || ( 88 > pad2.lx ) )
       g->worms[PLAYER_2]->worms_action |= ACTION_LEFT;
-    if ( keystate & P2_ACTION_KEY_RIGHT )
+    if ( ( keystate & P2_ACTION_KEY_RIGHT ) || ( pad2.lx > 178 ) )
       g->worms[PLAYER_2]->worms_action |= ACTION_RIGHT;
     if ( keystate & P2_ACTION_KEY_JUMP )
       g->worms[PLAYER_2]->worms_action |= (ACTION_JUMP | ACTION_CANCEL);

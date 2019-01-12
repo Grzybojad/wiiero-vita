@@ -1,6 +1,7 @@
 # Build files
 Build
 param.sfo
+eboot.bin
 
 # Vita build
 *.vpk
